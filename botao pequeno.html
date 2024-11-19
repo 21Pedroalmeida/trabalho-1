@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botão de Sucesso e Erro</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        #successButton {
+            width: 50px;
+            height: 50px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<button id="successButton">Clique</button>
+<p id="message"></p>
+
+<script>
+    const button = document.getElementById('successButton');
+    const message = document.getElementById('message');
+
+    // Evento de clique no botão
+    button.addEventListener('click', function(event) {
+        event.stopPropagation(); // Impede que o clique no botão dispare o evento do corpo
+        message.textContent = "Sucesso!";
+        message.style.color = "green";
+
+        // Limpa a mensagem após 2 segundos
+        setTimeout(() => {
+            message.textContent = "";
+        }, 2000);
+    });
+
+    // Evento de clique no corpo
+    document.body.addEventListener('click', function() {
+        message.textContent = "Erro!";
+        message.style.color = "red";
+
+        // Limpa a mensagem após 2 segundos
+        setTimeout(() => {
+            message.textContent = "";
+        }, 2000);
+    });
+</script>
+
+</body>
+</html>

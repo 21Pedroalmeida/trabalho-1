@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificador de Palíndromo</title>
+</head>
+<body>
+    <h1>Verificador de Palíndromo</h1>
+    <input type="text" id="wordInput" placeholder="Digite uma palavra">
+    <button onclick="checkPalindrome()">Verificar</button>
+    <p id="result"></p>
+
+    <script>
+        function isPalindrome(word) {
+            // Remove espaços, pontuações e converte para minúsculas
+            const cleanedWord = word.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+            // Inverte a palavra
+            const reversedWord = cleanedWord.split('').reverse().join('');
+            // Compara a palavra original com a invertida
+            return cleanedWord === reversedWord;
+        }
+
+        function checkPalindrome() {
+            const input = document.getElementById('wordInput').value;
+            const result = isPalindrome(input);
+            document.getElementById('result').textContent = result ? 
+                `${input} é um palíndromo!` : 
+                `${input} não é um palíndromo.`;
+        }
+    </script>
+</body>
+</html>

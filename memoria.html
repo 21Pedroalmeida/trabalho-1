@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Memória</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #e0f7fa; /* Cor de fundo azul claro */
+        }
+        #game {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 10px;
+        }
+        button {
+            padding: 20px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #42a5f5; /* Cor do botão azul */
+            color: white; /* Cor do texto */
+            border: none; /* Remove borda padrão */
+            border-radius: 5px; /* Bordas arredondadas */
+            transition: background-color 0.3s; /* Transição para efeito hover */
+        }
+        button:hover {
+            background-color: #1e88e5; /* Cor do botão ao passar o mouse */
+        }
+    </style>
+</head>
+<body>
+
+<h1>Jogo da Memória</h1>
+<div id="game"></div>
+
+<script>
+    const texts = ["A", "B", "C", "A", "B", "C", "D", "D", "E"];
+    let firstButton = null;
+    let secondButton = null;
+    let lockBoard = false;
+
+    function shuffle(array) {
+        array.sort(() => Math.random() - 0.5);
+    }
+
+    function createButtons() {
+        const gameContainer = document.getElementById("game");
+        shuffle(texts);
+
+        texts.forEach((text, index) => {
+            const button = document.createElement("button");
+            button.setAttribute("data-text", text);
+            button.textContent = "?" ;
+            button.addEventListener("click", handleButtonClick);
+            gameContainer.appendChild(button);
+        });
+    }
+
+    function handleButtonClick(e) {
+        if (lockBoard) return;
+
+        const button = e.target;
+        button.textContent = button.getAttribute("data-text");
+
+        if (!firstButton) {
+            firstButton = button;
+        } else {
+            secondButton = button;
+            lockBoard = true;
+            checkMatch();
+        }
+    }
+
+    function checkMatch() {
+        if (firstButton.textContent === secondButton.textContent) {
+            resetBoard();
+        } else {
+            setTimeout(() => {
+                firstButton.textContent = "?";
+                secondButton.textContent = "?";
+                resetBoard();
+            }, 1000);
+        }
+    }
+
+    function resetBoard() {
+        [firstButton, secondButton] = [null, null];
+        lockBoard = false;
+    }
+
+    createButtons();
+</script>
+
+</body>
+</html>

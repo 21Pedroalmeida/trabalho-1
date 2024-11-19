@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combinador de Letras</title>
+</head>
+<body>
+    <h1>Gerador de Combinações Únicas</h1>
+    <input type="text" id="letterInput" maxlength="3" placeholder="Digite 3 letras" />
+    <button onclick="generateCombinations()">Gerar Combinações</button>
+    <p id="result"></p>
+
+    <script>
+        function getUniqueCombinations(letters) {
+            const combinations = new Set();
+
+            function generateCombinations(current, remaining) {
+                if (current.length === letters.length) {
+                    combinations.add(current);
+                    return;
+                }
+
+                for (let i = 0; i < remaining.length; i++) {
+                    const next = current + remaining[i];
+                    const nextRemaining = remaining.slice(0, i) + remaining.slice(i + 1);
+                    generateCombinations(next, nextRemaining);
+                }
+            }
+
+            generateCombinations('', letters);
+            return Array.from(combinations);
+        }
+
+        function generateCombinations() {
+            const input = document.getElementById('letterInput').value.trim();
+            if (input.length !== 3) {
+                document.getElementById('result').textContent = "Por favor, insira exatamente 3 letras.";
+                return;
+            }
+            const result = getUniqueCombinations(input);
+            document.getElementById('result').textContent = "Combinações: " + result.join(', ');
+        }
+    </script>
+</body>
+</html>
